@@ -1,0 +1,12 @@
+node_modules
+.next
+.git
+.env
+.env.*
+!.env.local.example
+dist
+build
+coverage
+.DS_Store
+*.log
+.vercel

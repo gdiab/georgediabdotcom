@@ -1,0 +1,319 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Zach Holman inspired base styles */
+  * {
+    box-sizing: border-box;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+    background: #0a0a0a;
+    color-scheme: dark;
+  }
+  
+  html, body, #__next, [data-nextjs-scroll-focus-boundary] {
+    background: #0a0a0a;
+    color: #f0f0f0;
+    min-height: 100vh;
+  }
+  
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    line-height: 1.6;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Ensure all root elements are dark */
+  #__next, main, div[data-testid] {
+    background: #0a0a0a;
+  }
+  
+  /* Selection colors */
+  ::selection {
+    background-color: #4a9eff;
+    color: #0a0a0a;
+  }
+  
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background-color: #1a1a1a;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #333333;
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #4a4a4a;
+  }
+}
+
+@layer utilities {
+  /* Line clamping utilities */
+  .line-clamp-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+@layer components {
+  /* Zach Holman inspired container */
+  .container-holman {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  /* Typography hierarchy */
+  .holman-h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5em;
+    color: #f0f0f0;
+  }
+  
+  .holman-h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+    color: #f0f0f0;
+  }
+  
+  .holman-h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    color: #f0f0f0;
+  }
+  
+  .holman-p {
+    margin-bottom: 1.5em;
+    color: #e0e0e0;
+    line-height: 1.7;
+  }
+  
+  /* Link styles */
+  .holman-link {
+    color: #4a9eff;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  
+  .holman-link:hover {
+    color: #66b3ff;
+    text-decoration: underline;
+  }
+  
+  /* Post list styles */
+  .year-group {
+    margin: 3em 0;
+  }
+  
+  .year-header {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #f0f0f0;
+    margin-bottom: 1em;
+  }
+  
+  .post-item {
+    margin: 0.5em 0;
+    display: flex;
+    align-items: baseline;
+    gap: 1em;
+  }
+  
+  .post-date {
+    color: #888888;
+    font-size: 0.9rem;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace;
+    min-width: 60px;
+  }
+  
+  .post-title {
+    color: #f0f0f0;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  
+  .post-title:hover {
+    color: #4a9eff;
+  }
+  
+  /* Prose styles for blog content */
+  .prose {
+    color: #e0e0e0;
+    line-height: 1.7;
+    max-width: 65ch;
+  }
+  
+  .prose-lg {
+    font-size: 1.125rem;
+    line-height: 1.8;
+  }
+  
+  .prose h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5em;
+    color: #f0f0f0;
+  }
+  
+  .prose h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+    color: #f0f0f0;
+  }
+  
+  .prose h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    color: #f0f0f0;
+  }
+  
+  .prose h4 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-top: 1.25em;
+    margin-bottom: 0.5em;
+    color: #f0f0f0;
+  }
+  
+  .prose p {
+    margin-bottom: 1.5em;
+    color: #e0e0e0;
+  }
+  
+  .prose ul, .prose ol {
+    margin-bottom: 1.5em;
+    padding-left: 1.5em;
+  }
+  
+  .prose li {
+    margin-bottom: 0.5em;
+    color: #e0e0e0;
+  }
+  
+  .prose ul li {
+    list-style-type: disc;
+  }
+  
+  .prose ol li {
+    list-style-type: decimal;
+  }
+  
+  .prose blockquote {
+    border-left: 4px solid #333333;
+    padding-left: 1em;
+    margin: 1.5em 0;
+    font-style: italic;
+    color: #b0b0b0;
+    background: #1a1a1a;
+    border-radius: 0 4px 4px 0;
+  }
+  
+  .prose code {
+    background: #1e1e1e;
+    color: #e0e0e0;
+    padding: 0.125em 0.25em;
+    border-radius: 3px;
+    font-size: 0.875em;
+    font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  }
+  
+  .prose pre {
+    background: #1e1e1e;
+    color: #e0e0e0;
+    padding: 1.5em;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 1.5em 0;
+    border: 1px solid #333333;
+  }
+  
+  .prose pre code {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+  }
+  
+  .prose a {
+    color: #4a9eff;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  
+  .prose a:hover {
+    color: #66b3ff;
+    text-decoration: underline;
+  }
+  
+  .prose img {
+    border-radius: 8px;
+    margin: 1.5em 0;
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .prose hr {
+    border: none;
+    border-top: 1px solid #333333;
+    margin: 2em 0;
+  }
+  
+  .prose table {
+    width: 100%;
+    margin: 1.5em 0;
+    border-collapse: collapse;
+  }
+  
+  .prose th, .prose td {
+    border: 1px solid #333333;
+    padding: 0.75em;
+    text-align: left;
+  }
+  
+  .prose th {
+    background: #1a1a1a;
+    font-weight: 600;
+    color: #f0f0f0;
+  }
+  
+  .prose td {
+    color: #e0e0e0;
+  }
+}
+
