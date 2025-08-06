@@ -1,230 +1,281 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-750: #2d3748;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+  --color-gray-950: #0f1419;
+  
+  --color-blue-50: #eff6ff;
+  --color-blue-100: #dbeafe;
+  --color-blue-200: #bfdbfe;
+  --color-blue-300: #93c5fd;
+  --color-blue-400: #60a5fa;
+  --color-blue-500: #3b82f6;
+  --color-blue-600: #2563eb;
+  --color-blue-700: #1d4ed8;
+  --color-blue-800: #1e40af;
+  --color-blue-900: #1e3a8a;
+  
+  --font-family-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-family-mono: "SF Mono", Monaco, Inconsolata, "Roboto Mono", monospace;
+}
 
 @layer base {
-  /* Zach Holman inspired base styles */
+  /* Modern dark theme base styles */
   * {
     box-sizing: border-box;
   }
   
   html {
     scroll-behavior: smooth;
-    background: #0a0a0a;
+    background: #111827; /* gray-900 */
     color-scheme: dark;
   }
   
   html, body, #__next, [data-nextjs-scroll-focus-boundary] {
-    background: #0a0a0a;
-    color: #f0f0f0;
+    background: #111827; /* gray-900 */
+    color: #f3f4f6; /* gray-100 */
     min-height: 100vh;
   }
   
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 1.6;
     font-feature-settings: 'rlig' 1, 'calt' 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
   
-  /* Ensure all root elements are dark */
+  /* Ensure all root elements use the new theme */
   #__next, main, div[data-testid] {
-    background: #0a0a0a;
+    background: #111827; /* gray-900 */
   }
   
   /* Selection colors */
   ::selection {
-    background-color: #4a9eff;
-    color: #0a0a0a;
+    background-color: #60a5fa; /* blue-400 */
+    color: #111827; /* gray-900 */
   }
   
-  /* Scrollbar styling */
+  /* Scrollbar styling for webkit browsers */
   ::-webkit-scrollbar {
     width: 8px;
   }
   
   ::-webkit-scrollbar-track {
-    background-color: #1a1a1a;
+    background-color: #1f2937; /* gray-800 */
   }
   
   ::-webkit-scrollbar-thumb {
-    background-color: #333333;
+    background-color: #4b5563; /* gray-600 */
     border-radius: 4px;
   }
   
   ::-webkit-scrollbar-thumb:hover {
-    background-color: #4a4a4a;
+    background-color: #6b7280; /* gray-500 */
+  }
+  
+  /* Focus outlines */
+  :focus {
+    outline: 2px solid #60a5fa; /* blue-400 */
+    outline-offset: 2px;
+  }
+  
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+  
+  :focus-visible {
+    outline: 2px solid #60a5fa; /* blue-400 */
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* Container system */
+  .container-modern {
+    max-width: 56rem; /* 4xl equivalent */
+    margin: 0 auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  @media (min-width: 640px) {
+    .container-modern {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+  
+  /* Typography hierarchy */
+  .heading-xl {
+    @apply text-4xl font-extrabold leading-tight text-gray-100 mb-4;
+  }
+  
+  .heading-lg {
+    @apply text-3xl font-bold leading-snug text-gray-100 mb-3;
+  }
+  
+  .heading-md {
+    @apply text-2xl font-semibold leading-normal text-gray-100 mb-2;
+  }
+  
+  .heading-sm {
+    @apply text-xl font-semibold leading-relaxed text-gray-100 mb-2;
+  }
+  
+  .body-text {
+    @apply text-gray-200 leading-relaxed mb-4;
+  }
+  
+  .body-text-secondary {
+    @apply text-gray-400 leading-normal;
+  }
+  
+  /* Link styles */
+  .link-primary {
+    @apply text-blue-400 no-underline transition-colors duration-200 hover:text-blue-300 hover:underline;
+  }
+  
+  .link-secondary {
+    @apply text-gray-400 no-underline transition-colors duration-200 hover:text-gray-100;
+  }
+  
+  /* Card components */
+  .card {
+    @apply bg-gray-800 border border-gray-700 rounded-lg transition-all duration-200;
+  }
+  
+  .card:hover {
+    @apply bg-gray-750 border-gray-600;
+  }
+  
+  .card-clickable {
+    @apply cursor-pointer;
+  }
+  
+  .card-clickable:hover {
+    @apply transform -translate-y-0.5 shadow-lg;
+  }
+  
+  /* Button components */
+  .btn {
+    @apply inline-flex items-center justify-center px-4 py-2 rounded-md font-medium text-sm transition-all duration-200 cursor-pointer border-0 no-underline;
+  }
+  
+  .btn-primary {
+    @apply bg-blue-400 text-gray-900 hover:bg-blue-500;
+  }
+  
+  .btn-secondary {
+    @apply bg-gray-700 text-gray-100 border border-gray-600 hover:bg-gray-600;
+  }
+  
+  .btn-ghost {
+    @apply bg-transparent text-gray-400 hover:bg-gray-700 hover:text-gray-100;
+  }
+  
+  /* Form components */
+  .form-input {
+    @apply w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-md text-gray-100 text-sm transition-all duration-200 placeholder-gray-500 focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400;
+  }
+  
+  .form-label {
+    @apply block text-sm font-medium text-gray-100 mb-1;
+  }
+  
+  /* Badge component */
+  .badge {
+    @apply inline-flex items-center px-3 py-1 bg-gray-700 text-gray-200 rounded-full text-xs font-medium;
+  }
+  
+  .badge-primary {
+    @apply bg-blue-400 text-gray-900;
   }
 }
 
 @layer utilities {
-  /* Line clamping utilities */
-  .line-clamp-1 {
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+  /* Animation utilities */
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-in-out;
   }
   
-  .line-clamp-2 {
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Text truncation utilities */
+  .truncate-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
   
-  .line-clamp-3 {
+  .truncate-3 {
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
-}
-
-@layer components {
-  /* Zach Holman inspired container */
-  .container-holman {
-    max-width: 740px;
-    margin: 0 auto;
-    padding: 0 20px;
-  }
   
-  /* Typography hierarchy */
-  .holman-h1 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 0.5em;
-    color: #f0f0f0;
-  }
-  
-  .holman-h2 {
-    font-size: 2rem;
-    font-weight: 700;
-    margin-top: 2em;
-    margin-bottom: 0.5em;
-    color: #f0f0f0;
-  }
-  
-  .holman-h3 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-top: 1.5em;
-    margin-bottom: 0.5em;
-    color: #f0f0f0;
-  }
-  
-  .holman-p {
-    margin-bottom: 1.5em;
-    color: #e0e0e0;
-    line-height: 1.7;
-  }
-  
-  /* Link styles */
-  .holman-link {
-    color: #4a9eff;
-    text-decoration: none;
-    transition: color 0.2s ease;
-  }
-  
-  .holman-link:hover {
-    color: #66b3ff;
-    text-decoration: underline;
-  }
-  
-  /* Post list styles */
-  .year-group {
-    margin: 3em 0;
-  }
-  
-  .year-header {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #f0f0f0;
-    margin-bottom: 1em;
-  }
-  
-  .post-item {
-    margin: 0.5em 0;
-    display: flex;
-    align-items: baseline;
-    gap: 1em;
-  }
-  
-  .post-date {
-    color: #888888;
-    font-size: 0.9rem;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace;
-    min-width: 60px;
-  }
-  
-  .post-title {
-    color: #f0f0f0;
-    text-decoration: none;
-    transition: color 0.2s ease;
-  }
-  
-  .post-title:hover {
-    color: #4a9eff;
+  /* Custom color utilities */
+  .bg-gray-750 {
+    background-color: #2d3748;
   }
   
   /* Prose styles for blog content */
   .prose {
-    color: #e0e0e0;
-    line-height: 1.7;
-    max-width: 65ch;
-  }
-  
-  .prose-lg {
-    font-size: 1.125rem;
-    line-height: 1.8;
+    @apply text-gray-200 max-w-none leading-relaxed;
   }
   
   .prose h1 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 0.5em;
-    color: #f0f0f0;
+    @apply text-4xl font-extrabold text-gray-100 mb-4 mt-8;
   }
   
   .prose h2 {
-    font-size: 2rem;
-    font-weight: 700;
-    margin-top: 2em;
-    margin-bottom: 0.5em;
-    color: #f0f0f0;
+    @apply text-3xl font-bold text-gray-100 mb-3 mt-8;
   }
   
   .prose h3 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-top: 1.5em;
-    margin-bottom: 0.5em;
-    color: #f0f0f0;
+    @apply text-2xl font-semibold text-gray-100 mb-2 mt-6;
   }
   
   .prose h4 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-top: 1.25em;
-    margin-bottom: 0.5em;
-    color: #f0f0f0;
+    @apply text-xl font-semibold text-gray-100 mb-2 mt-5;
   }
   
   .prose p {
-    margin-bottom: 1.5em;
-    color: #e0e0e0;
+    @apply text-gray-200 mb-4;
+  }
+  
+  .prose a {
+    @apply text-blue-400 no-underline transition-colors duration-200 hover:text-blue-300 hover:underline;
   }
   
   .prose ul, .prose ol {
-    margin-bottom: 1.5em;
-    padding-left: 1.5em;
+    @apply mb-6 pl-6;
   }
   
   .prose li {
-    margin-bottom: 0.5em;
-    color: #e0e0e0;
+    @apply mb-2 text-gray-200;
   }
   
   .prose ul li {
@@ -236,84 +287,42 @@
   }
   
   .prose blockquote {
-    border-left: 4px solid #333333;
-    padding-left: 1em;
-    margin: 1.5em 0;
-    font-style: italic;
-    color: #b0b0b0;
-    background: #1a1a1a;
-    border-radius: 0 4px 4px 0;
+    @apply border-l-4 border-blue-400 pl-4 my-6 italic text-gray-300 bg-gray-800 rounded-r py-4;
   }
   
   .prose code {
-    background: #1e1e1e;
-    color: #e0e0e0;
-    padding: 0.125em 0.25em;
-    border-radius: 3px;
-    font-size: 0.875em;
-    font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+    @apply bg-gray-700 text-gray-100 px-1.5 py-0.5 rounded text-sm font-mono;
   }
   
   .prose pre {
-    background: #1e1e1e;
-    color: #e0e0e0;
-    padding: 1.5em;
-    border-radius: 8px;
-    overflow-x: auto;
-    margin: 1.5em 0;
-    border: 1px solid #333333;
+    @apply bg-gray-800 text-gray-100 p-6 rounded-lg overflow-x-auto my-6 border border-gray-700;
   }
   
   .prose pre code {
-    background: transparent;
-    color: inherit;
-    padding: 0;
-  }
-  
-  .prose a {
-    color: #4a9eff;
-    text-decoration: none;
-    transition: color 0.2s ease;
-  }
-  
-  .prose a:hover {
-    color: #66b3ff;
-    text-decoration: underline;
+    @apply bg-transparent text-inherit p-0;
   }
   
   .prose img {
-    border-radius: 8px;
-    margin: 1.5em 0;
-    max-width: 100%;
-    height: auto;
+    @apply rounded-lg my-6 max-w-full h-auto;
   }
   
   .prose hr {
-    border: none;
-    border-top: 1px solid #333333;
-    margin: 2em 0;
+    @apply border-0 border-t border-gray-700 my-8;
   }
   
   .prose table {
-    width: 100%;
-    margin: 1.5em 0;
-    border-collapse: collapse;
+    @apply w-full my-6 border-collapse;
   }
   
   .prose th, .prose td {
-    border: 1px solid #333333;
-    padding: 0.75em;
-    text-align: left;
+    @apply border border-gray-700 px-3 py-3 text-left;
   }
   
   .prose th {
-    background: #1a1a1a;
-    font-weight: 600;
-    color: #f0f0f0;
+    @apply bg-gray-800 font-semibold text-gray-100;
   }
   
   .prose td {
-    color: #e0e0e0;
+    @apply text-gray-200;
   }
 }
-

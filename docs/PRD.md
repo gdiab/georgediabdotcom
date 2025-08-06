@@ -28,17 +28,31 @@ An AI-powered blog platform that automatically generates draft posts from news s
 ## Design Requirements
 
 ### Visual Design
-- **Theme**: Default dark mode with monochrome palette
-- **Layout**: Left-aligned inspired by Zach Holman's "Left" style
-  - Fixed sidebar navigation (left)
-  - Content area (right)
-  - Full-height columns
-- **Typography**: Yanone Kaffeesatz for headings, system fonts for body
-- **Aesthetic**: Minimal ornamentation, high contrast, fast loading
+- **Theme**: Modern dark theme with sophisticated color palette
+  - Primary background: `bg-gray-900` (#111827)
+  - Card/container background: `bg-gray-800` (#1f2937)
+  - Accent color: `text-blue-400` (#60a5fa)
+  - Primary text: `text-gray-100` (#f3f4f6)
+  - Secondary text: `text-gray-400` (#9ca3af)
+- **Layout**: Modern card-based design with clean structure
+  - Centered container with max-width constraints
+  - Header with navigation and branding
+  - Card-based content presentation
+  - Clean footer with social links
+- **Typography**: System font stack with clear hierarchy
+  - Headings: Bold weights with proper spacing
+  - Body text: Optimal line height and readability
+  - Code: Monospace with syntax highlighting
+- **Components**: Card-based design system
+  - Blog post cards with cover images
+  - Hover states and smooth transitions
+  - Consistent spacing and borders
+  - Professional form styling
 
 ### Responsive Design
-- **Desktop**: Fixed sidebar layout
-- **Mobile**: Sidebar collapses to top navigation
+- **Desktop**: Card grid layouts with optimal spacing
+- **Tablet**: Responsive grid adjustments
+- **Mobile**: Single column layouts with touch-friendly interactions
 
 ## User Stories
 

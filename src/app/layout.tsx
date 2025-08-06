@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import SessionProvider from '@/components/providers/SessionProvider'
-import MinimalLayout from '@/components/MinimalLayout'
+import Layout from '@/components/Layout'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -44,15 +44,15 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="scroll-smooth dark" style={{ background: '#0a0a0a', colorScheme: 'dark' }}>
+    <html lang="en" className="scroll-smooth dark" style={{ background: '#111827', colorScheme: 'dark' }}>
       <body 
-        className={`${inter.className} antialiased bg-[#0a0a0a] text-[#f0f0f0] min-h-screen`}
-        style={{ background: '#0a0a0a', color: '#f0f0f0' }}
+        className={`${inter.className} antialiased bg-gray-900 text-gray-100 min-h-screen`}
+        style={{ background: '#111827', color: '#f3f4f6' }}
       >
         <SessionProvider>
-          <MinimalLayout>
+          <Layout>
             {children}
-          </MinimalLayout>
+          </Layout>
         </SessionProvider>
       </body>
     </html>
