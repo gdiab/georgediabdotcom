@@ -6,6 +6,30 @@ import { users, posts, categories, tags, postCategories, postTags } from './sche
  * Database query utilities and helpers
  */
 
+// Post field selections
+const publicPostFields = {
+  id: posts.id,
+  title: posts.title,
+  slug: posts.slug,
+  content: posts.content,
+  excerpt: posts.excerpt,
+  coverImage: posts.coverImage,
+  status: posts.status,
+  authorId: posts.authorId,
+  seoTitle: posts.seoTitle,
+  seoDescription: posts.seoDescription,
+  viewCount: posts.viewCount,
+  publishedAt: posts.publishedAt,
+  createdAt: posts.createdAt,
+  updatedAt: posts.updatedAt,
+  // Note: aiGenerated is excluded from public queries
+};
+
+const adminPostFields = {
+  ...publicPostFields,
+  aiGenerated: posts.aiGenerated,
+};
+
 // ============================================================================
 // USER QUERIES
 // ============================================================================
@@ -92,12 +116,12 @@ export const userQueries = {
 
 export const postQueries = {
   /**
-   * Get post by ID with full details
+   * Get post by ID with full details (for admin use - includes all fields)
    */
   async getById(id: string) {
     const result = await db
       .select({
-        post: posts,
+        post: adminPostFields,
         author: {
           id: users.id,
           name: users.name,
@@ -138,16 +162,8 @@ export const postQueries = {
    */
   async getBySlug(slug: string) {
     const result = await db
-      .select({
-        post: posts,
-        author: {
-          id: users.id,
-          name: users.name,
-          email: users.email,
-        },
-      })
+      .select(publicPostFields)
       .from(posts)
-      .leftJoin(users, eq(posts.authorId, users.id))
       .where(eq(posts.slug, slug))
       .limit(1);
 
@@ -159,17 +175,16 @@ export const postQueries = {
         .select({ category: categories })
         .from(postCategories)
         .leftJoin(categories, eq(postCategories.categoryId, categories.id))
-        .where(eq(postCategories.postId, result[0].post.id)),
+        .where(eq(postCategories.postId, result[0].id)),
       db
         .select({ tag: tags })
         .from(postTags)
         .leftJoin(tags, eq(postTags.tagId, tags.id))
-        .where(eq(postTags.postId, result[0].post.id)),
+        .where(eq(postTags.postId, result[0].id)),
     ]);
 
     return {
-      ...result[0].post,
-      author: result[0].author,
+      ...result[0],
       categories: postCats.map(pc => pc.category).filter(Boolean),
       tags: postTagsData.map(pt => pt.tag).filter(Boolean),
     };
@@ -183,15 +198,8 @@ export const postQueries = {
     
     const [result, totalResult] = await Promise.all([
       db
-        .select({
-          post: posts,
-          author: {
-            id: users.id,
-            name: users.name,
-          },
-        })
+        .select(publicPostFields)
         .from(posts)
-        .leftJoin(users, eq(posts.authorId, users.id))
         .where(eq(posts.status, 'published'))
         .orderBy(desc(posts.publishedAt))
         .limit(limit)
@@ -212,7 +220,7 @@ export const postQueries = {
   },
 
   /**
-   * Get all posts (including drafts) with pagination
+   * Get all posts (including drafts) with pagination - for admin use
    */
   async getAll(page = 1, limit = 10) {
     const offset = (page - 1) * limit;
@@ -220,7 +228,7 @@ export const postQueries = {
     const [result, totalResult] = await Promise.all([
       db
         .select({
-          post: posts,
+          post: adminPostFields,
           author: {
             id: users.id,
             name: users.name,
@@ -263,15 +271,8 @@ export const postQueries = {
 
     const [result, totalResult] = await Promise.all([
       db
-        .select({
-          post: posts,
-          author: {
-            id: users.id,
-            name: users.name,
-          },
-        })
+        .select(publicPostFields)
         .from(posts)
-        .leftJoin(users, eq(posts.authorId, users.id))
         .where(whereClause)
         .orderBy(desc(posts.publishedAt))
         .limit(limit)
@@ -308,15 +309,8 @@ export const postQueries = {
 
     const [result, totalResult] = await Promise.all([
       db
-        .select({
-          post: posts,
-          author: {
-            id: users.id,
-            name: users.name,
-          },
-        })
+        .select(publicPostFields)
         .from(posts)
-        .leftJoin(users, eq(posts.authorId, users.id))
         .leftJoin(postCategories, eq(posts.id, postCategories.postId))
         .where(and(
           eq(posts.status, 'published'),

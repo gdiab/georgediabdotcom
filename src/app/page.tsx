@@ -45,9 +45,8 @@ export default async function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {recentPosts.slice(0, 3).map((postData) => (
               <PostCard
-                key={postData.post.id}
-                post={postData.post}
-                author={postData.author}
+                key={postData.id}
+                post={postData}
                 featured={false}
               />
             ))}

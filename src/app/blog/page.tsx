@@ -65,9 +65,8 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mb-12">
             {posts.map((postData, index) => (
               <PostCard 
-                key={postData.post.id}
-                post={postData.post} 
-                author={postData.author}
+                key={postData.id}
+                post={postData} 
                 featured={index === 0 && page === 1} // First post on first page is featured
               />
             ))}

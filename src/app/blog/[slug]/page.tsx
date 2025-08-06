@@ -3,6 +3,7 @@ import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { postQueries } from '@/lib/db/queries';
+import ShareButton from '@/components/ShareButton';
 
 interface BlogPostPageProps {
   params: {
@@ -16,7 +17,7 @@ export async function generateStaticParams() {
     const { posts } = await postQueries.getPublished(1, 1000); // Get all published posts
     
     return posts.map((postData) => ({
-      slug: postData.post.slug,
+      slug: postData.slug,
     }));
   } catch (error) {
     console.error('Error generating static params:', error);
@@ -37,7 +38,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     }
 
     const title = post.seoTitle || post.title;
-    const description = post.seoDescription || post.excerpt || `Read ${post.title} by ${post.author?.name || 'George Diab'}`;
+    const description = post.seoDescription || post.excerpt || `Read ${post.title} by George Diab`;
     
     return {
       title,
@@ -47,7 +48,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
         description,
         type: 'article',
         publishedTime: post.publishedAt?.toISOString(),
-        authors: post.author?.name ? [post.author.name] : ['George Diab'],
+        authors: ['George Diab'],
         images: post.coverImage ? [{ url: post.coverImage, alt: post.title }] : [],
       },
       twitter: {
@@ -89,61 +90,53 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     const readingTime = calculateReadingTime(post.content || '');
 
     return (
-      <article>
-        {/* Breadcrumb Navigation */}
+      <article className="animate-fade-in">
+        {/* Back Navigation */}
         <nav className="mb-8">
-          <ol className="flex items-center space-x-2 text-sm text-[#888888]">
-            <li>
-              <Link href="/" className="holman-link hover:text-[#b0b0b0]">
-                Home
-              </Link>
-            </li>
-            <li>
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </li>
-            <li>
-              <Link href="/blog" className="holman-link hover:text-[#b0b0b0]">
-                Blog
-              </Link>
-            </li>
-            <li>
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </li>
-            <li className="text-[#f0f0f0] font-medium truncate">
-              {post.title}
-            </li>
-          </ol>
+          <Link
+            href="/blog"
+            className="inline-flex items-center text-gray-400 hover:text-blue-400 transition-colors group"
+          >
+            <svg className="w-4 h-4 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            Back to Blog
+          </Link>
         </nav>
+
+        {/* Cover Image */}
+        {post.coverImage && (
+          <div className="mb-8">
+            <div className="relative h-64 md:h-80 w-full rounded-xl overflow-hidden">
+              <Image
+                src={post.coverImage}
+                alt={post.title}
+                fill
+                className="object-cover"
+                priority
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+              />
+            </div>
+          </div>
+        )}
 
         {/* Article Header */}
         <header className="mb-12">
           <div className="mb-6">
-            {post.aiGenerated && (
-              <div className="inline-flex items-center bg-[#1a1a1a] text-[#f0f0f0] px-3 py-1 rounded-full text-sm font-medium mb-4 border border-[#333333]">
-                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                </svg>
-                AI Generated
-              </div>
-            )}
             
-            <h1 className="holman-h1">
+            <h1 className="heading-xl mb-6">
               {post.title}
             </h1>
             
             {post.excerpt && (
-              <p className="holman-p text-[#b0b0b0] text-xl">
+              <p className="body-text text-xl text-gray-300 leading-relaxed">
                 {post.excerpt}
               </p>
             )}
           </div>
 
           {/* Meta Information */}
-          <div className="flex flex-wrap items-center gap-6 text-sm text-[#888888] border-b border-[#333333] pb-6">
+          <div className="flex flex-wrap items-center gap-6 text-sm text-gray-400 border-b border-gray-700 pb-6">
             <div className="flex items-center">
               <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -151,7 +144,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               By {post.author?.name || 'George Diab'}
             </div>
             
-            <div className="flex items-center">
+            <div className="flex items-center text-blue-400">
               <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
@@ -177,89 +170,85 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </div>
         </header>
 
-        {/* Cover Image */}
-        {post.coverImage && (
-          <div className="mb-12">
-            <div className="relative h-96 w-full rounded-lg overflow-hidden">
-              <Image
-                src={post.coverImage}
-                alt={post.title}
-                fill
-                className="object-cover"
-                priority
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
-              />
-            </div>
-          </div>
-        )}
-
         {/* Article Content */}
-        <div className="prose prose-lg mb-12">
+        <div className="prose max-w-none mb-16">
           {post.content ? (
             <div dangerouslySetInnerHTML={{ __html: formatContent(post.content) }} />
           ) : (
-            <p className="text-[#b0b0b0] italic">No content available.</p>
+            <div className="card p-8 text-center">
+              <p className="body-text-secondary italic">No content available.</p>
+            </div>
           )}
         </div>
 
         {/* Categories and Tags */}
         {(post.categories.length > 0 || post.tags.length > 0) && (
-          <div className="border-t border-[#333333] pt-8 mb-12">
-            {post.categories.length > 0 && (
-              <div className="mb-4">
-                <h3 className="text-sm font-semibold text-[#f0f0f0] uppercase tracking-wider mb-2">
-                  Categories
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {post.categories.map((category) => 
-                    category && (
-                      <Link
-                        key={category.id}
-                        href={`/blog?category=${category.slug}`}
-                        className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-[#1a1a1a] text-[#f0f0f0] hover:bg-[#333333] transition-colors border border-[#333333]"
-                      >
-                        {category.name}
-                      </Link>
-                    )
-                  )}
+          <div className="border-t border-gray-700 pt-8 mb-12">
+            <div className="flex flex-col sm:flex-row gap-6">
+              {post.categories.length > 0 && (
+                <div className="flex-1">
+                  <h3 className="text-sm font-semibold text-gray-100 uppercase tracking-wider mb-3">
+                    Categories
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {post.categories.map((category) => 
+                      category && (
+                        <Link
+                          key={category.id}
+                          href={`/blog?category=${category.slug}`}
+                          className="badge hover:bg-blue-400 hover:text-gray-900 transition-colors"
+                        >
+                          {category.name}
+                        </Link>
+                      )
+                    )}
+                  </div>
                 </div>
-              </div>
-            )}
-            
-            {post.tags.length > 0 && (
-              <div>
-                <h3 className="text-sm font-semibold text-[#f0f0f0] uppercase tracking-wider mb-2">
-                  Tags
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {post.tags.map((tag) => 
-                    tag && (
-                      <Link
-                        key={tag.id}
-                        href={`/blog?tag=${tag.slug}`}
-                        className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-[#1a1a1a] text-[#b0b0b0] hover:bg-[#333333] transition-colors border border-[#333333]"
-                      >
-                        #{tag.name}
-                      </Link>
-                    )
-                  )}
+              )}
+              
+              {post.tags.length > 0 && (
+                <div className="flex-1">
+                  <h3 className="text-sm font-semibold text-gray-100 uppercase tracking-wider mb-3">
+                    Tags
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {post.tags.map((tag) => 
+                      tag && (
+                        <Link
+                          key={tag.id}
+                          href={`/blog?tag=${tag.slug}`}
+                          className="badge text-xs hover:bg-blue-400 hover:text-gray-900 transition-colors"
+                        >
+                          #{tag.name}
+                        </Link>
+                      )
+                    )}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         )}
 
-        {/* Back to Blog */}
-        <div className="border-t border-[#333333] pt-8">
-          <Link
-            href="/blog"
-            className="holman-link inline-flex items-center"
-          >
-            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            Back to all posts
-          </Link>
+        {/* Share & Navigation */}
+        <div className="border-t border-gray-700 pt-8">
+          <div className="flex items-center justify-between">
+            <Link
+              href="/blog"
+              className="btn btn-secondary inline-flex items-center"
+            >
+              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+              All Posts
+            </Link>
+
+            {/* Share buttons */}
+            <div className="flex items-center space-x-3">
+              <span className="text-sm text-gray-400">Share:</span>
+              <ShareButton title={post.title} />
+            </div>
+          </div>
         </div>
       </article>
     );
