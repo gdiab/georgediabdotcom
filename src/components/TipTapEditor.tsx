@@ -26,12 +26,12 @@ export default function TipTapEditor({ content = "", onChange, placeholder = "St
       Link.configure({
         openOnClick: false,
         HTMLAttributes: {
-          class: "text-indigo-600 hover:text-indigo-500 underline",
+          class: "text-blue-400 hover:text-blue-300 underline",
         },
       }),
       Highlight.configure({
         HTMLAttributes: {
-          class: "bg-yellow-200",
+          class: "bg-yellow-900 text-yellow-200",
         },
       }),
       TextAlign.configure({
@@ -43,7 +43,7 @@ export default function TipTapEditor({ content = "", onChange, placeholder = "St
       CodeBlockLowlight.configure({
         lowlight,
         HTMLAttributes: {
-          class: "bg-gray-100 rounded-md p-4 my-4 font-mono text-sm",
+          class: "bg-gray-800 border border-gray-700 rounded-md p-4 my-4 font-mono text-sm text-gray-100",
         },
       }),
     ],
@@ -53,7 +53,7 @@ export default function TipTapEditor({ content = "", onChange, placeholder = "St
     },
     editorProps: {
       attributes: {
-        class: "prose prose-lg max-w-none focus:outline-none min-h-[400px] px-6 py-4",
+        class: "prose prose-lg prose-invert max-w-none focus:outline-none min-h-[400px] px-6 py-4 text-gray-100",
       },
     },
     immediatelyRender: false,
@@ -64,12 +64,12 @@ export default function TipTapEditor({ content = "", onChange, placeholder = "St
   }
 
   return (
-    <div className="border border-gray-300 rounded-lg overflow-hidden bg-white">
+    <div className="border border-gray-600 rounded-lg overflow-hidden bg-gray-800">
       {/* Toolbar */}
-      <div className="border-b border-gray-300 bg-gray-50 p-2">
+      <div className="border-b border-gray-600 bg-gray-700 p-2">
         <div className="flex flex-wrap gap-1">
           {/* Text formatting */}
-          <div className="flex gap-1 border-r border-gray-300 pr-2">
+          <div className="flex gap-1 border-r border-gray-600 pr-2">
             <EditorButton
               onClick={() => editor.chain().focus().toggleBold().run()}
               isActive={editor.isActive("bold")}
@@ -108,7 +108,7 @@ export default function TipTapEditor({ content = "", onChange, placeholder = "St
           </div>
 
           {/* Headings */}
-          <div className="flex gap-1 border-r border-gray-300 pr-2">
+          <div className="flex gap-1 border-r border-gray-600 pr-2">
             <EditorButton
               onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
               isActive={editor.isActive("heading", { level: 1 })}
@@ -133,7 +133,7 @@ export default function TipTapEditor({ content = "", onChange, placeholder = "St
           </div>
 
           {/* Lists */}
-          <div className="flex gap-1 border-r border-gray-300 pr-2">
+          <div className="flex gap-1 border-r border-gray-600 pr-2">
             <EditorButton
               onClick={() => editor.chain().focus().toggleBulletList().run()}
               isActive={editor.isActive("bulletList")}
@@ -151,7 +151,7 @@ export default function TipTapEditor({ content = "", onChange, placeholder = "St
           </div>
 
           {/* Other formatting */}
-          <div className="flex gap-1 border-r border-gray-300 pr-2">
+          <div className="flex gap-1 border-r border-gray-600 pr-2">
             <EditorButton
               onClick={() => editor.chain().focus().toggleBlockquote().run()}
               isActive={editor.isActive("blockquote")}
@@ -175,7 +175,7 @@ export default function TipTapEditor({ content = "", onChange, placeholder = "St
           </div>
 
           {/* Text alignment */}
-          <div className="flex gap-1 border-r border-gray-300 pr-2">
+          <div className="flex gap-1 border-r border-gray-600 pr-2">
             <EditorButton
               onClick={() => editor.chain().focus().setTextAlign("left").run()}
               isActive={editor.isActive({ textAlign: "left" })}
@@ -241,10 +241,10 @@ function EditorButton({ onClick, isActive = false, disabled = false, title, chil
       title={title}
       className={`px-2 py-1 rounded text-sm font-medium transition-colors ${
         isActive
-          ? "bg-indigo-600 text-white"
+          ? "bg-blue-600 text-white"
           : disabled
-          ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-          : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-300"
+          ? "bg-gray-600 text-gray-500 cursor-not-allowed"
+          : "bg-gray-600 text-gray-200 hover:bg-gray-500 border border-gray-500"
       }`}
     >
       {children}

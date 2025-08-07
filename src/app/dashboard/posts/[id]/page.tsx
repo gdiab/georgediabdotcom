@@ -108,7 +108,7 @@ export default function EditPostPage() {
     return (
       <DashboardLayout>
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
         </div>
       </DashboardLayout>
     )
@@ -118,10 +118,10 @@ export default function EditPostPage() {
     <DashboardLayout>
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Edit Post</h1>
+          <h1 className="text-3xl font-bold text-gray-100">Edit Post</h1>
           <button
             onClick={handleDelete}
-            className="px-4 py-2 border border-red-300 rounded-md shadow-sm text-sm font-medium text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+            className="px-4 py-2 border border-red-600 rounded-md shadow-sm text-sm font-medium text-red-400 bg-gray-800 hover:bg-red-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
           >
             Delete Post
           </button>
@@ -130,7 +130,7 @@ export default function EditPostPage() {
         <div className="space-y-6">
           {/* Title */}
           <div>
-            <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="title" className="block text-sm font-medium text-gray-300 mb-2">
               Title
             </label>
             <input
@@ -138,14 +138,14 @@ export default function EditPostPage() {
               id="title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-2 border"
+              className="block w-full rounded-md bg-gray-800 border-gray-600 text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-2 border"
               placeholder="Enter post title..."
             />
           </div>
 
           {/* Slug */}
           <div>
-            <label htmlFor="slug" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="slug" className="block text-sm font-medium text-gray-300 mb-2">
               Slug
             </label>
             <input
@@ -153,17 +153,17 @@ export default function EditPostPage() {
               id="slug"
               value={slug}
               onChange={(e) => setSlug(e.target.value)}
-              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-2 border"
+              className="block w-full rounded-md bg-gray-800 border-gray-600 text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-2 border"
               placeholder="post-url-slug"
             />
-            <p className="mt-1 text-sm text-gray-500">
+            <p className="mt-1 text-sm text-gray-400">
               URL: /blog/{slug}
             </p>
           </div>
 
           {/* Summary */}
           <div>
-            <label htmlFor="summary" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="summary" className="block text-sm font-medium text-gray-300 mb-2">
               Summary
             </label>
             <textarea
@@ -171,22 +171,22 @@ export default function EditPostPage() {
               value={summary}
               onChange={(e) => setSummary(e.target.value)}
               rows={3}
-              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-4 py-2 border"
+              className="block w-full rounded-md bg-gray-800 border-gray-600 text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-4 py-2 border"
               placeholder="Brief description of the post..."
             />
           </div>
 
           {/* Status */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-300 mb-2">
               Status
             </label>
             <div className="flex items-center space-x-4">
               <span
                 className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
                   status === "published"
-                    ? "bg-green-100 text-green-800"
-                    : "bg-yellow-100 text-yellow-800"
+                    ? "bg-green-900 text-green-300 border border-green-700"
+                    : "bg-yellow-900 text-yellow-300 border border-yellow-700"
                 }`}
               >
                 {status === "published" ? "Published" : "Draft"}
@@ -195,7 +195,7 @@ export default function EditPostPage() {
                 <button
                   onClick={() => handleSave("published")}
                   disabled={isSaving}
-                  className="text-sm text-indigo-600 hover:text-indigo-500"
+                  className="text-sm text-blue-400 hover:text-blue-300"
                 >
                   Publish Now
                 </button>
@@ -204,7 +204,7 @@ export default function EditPostPage() {
                 <button
                   onClick={() => handleSave("draft")}
                   disabled={isSaving}
-                  className="text-sm text-gray-600 hover:text-gray-500"
+                  className="text-sm text-gray-400 hover:text-gray-300"
                 >
                   Unpublish
                 </button>
@@ -214,7 +214,7 @@ export default function EditPostPage() {
 
           {/* Content */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-300 mb-2">
               Content
             </label>
             <TipTapEditor
@@ -225,12 +225,12 @@ export default function EditPostPage() {
           </div>
 
           {/* Actions */}
-          <div className="flex justify-between pt-6 border-t">
+          <div className="flex justify-between pt-6 border-t border-gray-700">
             <div className="flex space-x-4">
               <button
                 type="button"
                 onClick={() => router.push("/dashboard/posts")}
-                className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="px-4 py-2 border border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-300 bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
               >
                 Back to Posts
               </button>
@@ -239,7 +239,7 @@ export default function EditPostPage() {
                   href={`/blog/${slug}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="inline-flex items-center px-4 py-2 border border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-300 bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 >
                   View Post
                   <svg className="ml-2 -mr-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -252,7 +252,7 @@ export default function EditPostPage() {
               type="button"
               onClick={() => handleSave()}
               disabled={isSaving}
-              className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSaving ? "Saving..." : "Save Changes"}
             </button>
