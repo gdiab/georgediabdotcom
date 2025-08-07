@@ -135,16 +135,14 @@ The current implementation doesn't match the PRD design specifications:
 ## 🔧 Known Issues to Address
 
 ### High Priority (Before Production):
-1. **TipTap Editor Styling** - Currently barely usable in dark theme, needs improvement
-2. **Design System Completion** - Missing Yanone Kaffeesatz font and some dark theme elements
 
 ### Medium Priority:
-3. **Categories & Tags** - Routes referenced but not implemented
-4. **Settings Page** - Admin settings page not yet created
-5. **Search Functionality** - Search mentioned in blog listing but not implemented
+1. **Categories & Tags** - Routes referenced but not implemented
+2. **Settings Page** - Admin settings page not yet created
+3. **Search Functionality** - Search mentioned in blog listing but not implemented
 
 ### Low Priority:
-6. **Email Notifications** - User email field exists but no email functionality
+4. **Email Notifications** - User email field exists but no email functionality
 
 ## 📦 Complete Dependency List
 
@@ -156,16 +154,23 @@ The current implementation doesn't match the PRD design specifications:
 ### UI & Styling
 - Tailwind CSS 4.1.11
 - TipTap Editor 3.0.9 (with extensions)
+- Custom SVG icons (inline components)
 
 ### Database & Auth
 - Drizzle ORM 0.35.0
 - PostgreSQL (via Docker)
 - NextAuth 4.24.11
+- @auth/drizzle-adapter 1.10.0
+
+### Content & Media
+- @vercel/blob 0.24.1
+- lowlight 3.3.0
 
 ### Development Tools
 - Docker & Docker Compose
 - ESLint 8.57.1
 - Drizzle Kit 0.26.0
+- postgres 3.4.5
 
 ## 🚀 How to Get Started
 
