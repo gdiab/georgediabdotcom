@@ -40,6 +40,7 @@ Based on the user's request, load the appropriate specialized guidance:
 - Never override project-specific rules
 - Ask for clarification when context is ambiguous
 - Temporary files go in `./tmp` or `.tmp`
+- Remember to read the package json or confirm what versions of libraries and packages are being used, example  "@tailwindcss/postcss": "^4.1.11",
 
 ## Working With This Config
 If you need detailed guidance for a specific area, mention it and I'll reference the appropriate specialized file. For example: "I need to optimize our PostgreSQL queries" → I'll use `.claude/specialized/database.md`.
